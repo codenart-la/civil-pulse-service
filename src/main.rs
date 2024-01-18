@@ -24,6 +24,16 @@ interface I {
 var k: dyn I + J + K
 */
 
+macro_rules! say_hi {
+    () => {
+        println!("hi");
+    };
+
+    ($name:expr) => {
+        println!("hi {}", $name);
+    };
+}
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 struct Color {
     red: u8,
@@ -77,6 +87,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         "but what if it was yaml?\n{}",
         serde_yaml::to_string(&biggo_struct)?
     );
+
+    say_hi!();
+    say_hi!("Mario");
 
     // run it
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000").await?;
