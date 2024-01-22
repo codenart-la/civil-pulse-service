@@ -1,13 +1,24 @@
+use std::future::Future;
+
+#[derive(Debug)]
+pub enum MyResult<T, E> {
+    /// Contains the success value
+    MyOk(T),
+
+    /// Contains the error value
+    MyErr(E),
+}
+
 async fn async_add_one(x: i32) -> i32 {
     x + 1
 }
 
-async fn run_async_add_one(x: i32) -> Result<i32, String> {
+async fn run_async_add_one(x: i32) -> MyResult<i32, String> {
     if x == 0 {
-        return Err("x is zero".to_string());
+        return MyResult::MyErr("x is zero".to_string());
     }
     let x = async_add_one(1).await;
-    Ok(x)
+    MyResult::MyOk(x)
 }
 
 /// This #[tokio::main] attribute is a macro that expands to a regular non-async main function that
