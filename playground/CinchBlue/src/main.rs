@@ -10,8 +10,12 @@ async fn run_async_add_one(x: i32) -> Result<i32, String> {
     Ok(x)
 }
 
+/// This #[tokio::main] attribute is a macro that expands to a regular non-async main function that
+/// will add all the async runtime init code + run this main function as an inner function.
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    // Everytime you run await, you essentially are interacting with the async runtime,
+    // and putting this unfinished task onto the overall "global" async task queue.
     let body = reqwest::get("https://www.rust-lang.org")
         .await?
         .text()
