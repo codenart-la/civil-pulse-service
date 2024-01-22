@@ -1,3 +1,4 @@
 #!/bin/bash
+pacman -Sy just curl wget
 ./scripts/setup-posix-common.sh
-pacman -S just
+source "$HOME/.cargo/env"
