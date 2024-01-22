@@ -3,6 +3,7 @@
 members = [
     "crates/hello-world", 
     "playground/CinchBlue",
+    "playground/Days0fthnder",
     "playground/chris-av",
 ]
 resolver = "2"
