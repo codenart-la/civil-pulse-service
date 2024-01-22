@@ -1,6 +1,8 @@
 
 [workspace]
 members = [
-    "crates/hello-world", "playground/CinchBlue",
+    "crates/hello-world", 
+    "playground/CinchBlue",
+    "playground/Days0fthnder",
 ]
 resolver = "2"

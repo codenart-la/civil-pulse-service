@@ -9,6 +9,8 @@ dependencies = [
  "reqwest",
  "tokio",
 ]
+name = "Days0fthnder"
+version = "0.1.0"
 
 [[package]]
 name = "addr2line"
