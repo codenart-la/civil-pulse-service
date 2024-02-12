@@ -4,9 +4,7 @@
 //! cargo run -p example-hello-world
 //! ```
 
-use axum::{response::Html, routing::get, Router};
-use hello_world::fetch_wiki;
-
+use axum::{extract::{path, Path}, response::Html, routing::get, Router}; use hello_world::fetch_wiki;
 /*
 enum Result<T, E> {
     Ok(T),
@@ -55,8 +53,8 @@ struct BiggoStruct {
     color: Color,
 }
 
-async fn wiki() -> String {
-    fetch_wiki().unwrap_or_else(|e| {
+async fn wiki(Path(ll): Path<String>) -> String {
+    fetch_wiki(&ll).await.unwrap_or_else(|e| {
         tracing::error!("error fetching wiki: {:?}", e);
         format!("error fetching wiki: {:?}", e)
     })
@@ -69,7 +67,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     // build our application with a route
     let app = Router::new()
         .route("/", get(handler))
-        .route("/scrape", get(wiki));
+        .route("/scrape/:ll", get(wiki));
 
     let color = Color {
         red: 0,
