@@ -66,6 +66,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     // build our application with a route
     let app = Router::new()
         .route("/", get(handler))
+        .route("/scrape", get(wiki));
 
     let color = Color {
         red: 0,
