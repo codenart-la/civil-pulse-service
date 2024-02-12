@@ -6,7 +6,7 @@ pub async fn fetch_wiki<'a>(myselector: &'a str) -> Result<String, Box<dyn std::
     let html_content = response?.text();
 
     // let's use a parser
-    let document = Html::parse_document(&html_content);
+    let document = Html::parse_document(&html_content.await?);
 
     let header_selector = scraper::Selector::parse("h1 > span")?;
     let header = document.select(&header_selector);
