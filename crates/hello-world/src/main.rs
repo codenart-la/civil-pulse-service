@@ -55,6 +55,10 @@ struct BiggoStruct {
     color: Color,
 }
 
+async fn wiki() -> Result<String, Box<dyn std::error::Error>> {
+    fetch_wiki()
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     tracing_subscriber::fmt::init();
