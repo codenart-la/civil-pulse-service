@@ -5,6 +5,7 @@
 //! ```
 
 use axum::{response::Html, routing::get, Router};
+use hello_world::fetch_wiki;
 
 /*
 enum Result<T, E> {
