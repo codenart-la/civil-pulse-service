@@ -1,5 +1,4 @@
-use reqwest::blocking;
-use scraper::{selector, Html, Selector};
+use scraper::{Html, Selector};
 
 pub async fn fetch_wiki<'a>(myselector: &'a str) -> Result<String, Box<dyn std::error::Error + 'a>> {
     let response = reqwest::get("https://en.wikipedia.org/wiki/Battle_of_the_Bulge").await;
@@ -8,7 +7,7 @@ pub async fn fetch_wiki<'a>(myselector: &'a str) -> Result<String, Box<dyn std::
     // let's use a parser
     let document = Html::parse_document(&html_content.await?);
 
-    let header_selector = scraper::Selector::parse(&myselector)?;
+    let header_selector = Selector::parse(&myselector)?;
     let header = document.select(&header_selector);
 
     for h in header {
