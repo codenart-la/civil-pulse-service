@@ -55,8 +55,11 @@ struct BiggoStruct {
     color: Color,
 }
 
-async fn wiki() -> Result<String, Box<dyn std::error::Error>> {
-    fetch_wiki()
+async fn wiki() -> String {
+    fetch_wiki().unwrap_or_else(|e| {
+        tracing::error!("error fetching wiki: {:?}", e);
+        format!("error fetching wiki: {:?}", e)
+    })
 }
 
 #[tokio::main]
