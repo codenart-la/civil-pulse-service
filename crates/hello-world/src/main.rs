@@ -64,7 +64,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     tracing_subscriber::fmt::init();
 
     // build our application with a route
-    let app = Router::new().route("/", get(handler));
+    let app = Router::new()
+        .route("/", get(handler))
 
     let color = Color {
         red: 0,
