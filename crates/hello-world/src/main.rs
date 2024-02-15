@@ -1,17 +1,21 @@
 use axum::{
-    extract::Path, 
-    response::Html, 
-    response::IntoResponse,
-    routing::get, 
-    routing::post, Json,
     Router,
+    routing::{
+        get,
+        post,
+    }
 };
-use hello_world::fetch_wiki;
-use serde::Serialize;
+
+pub mod routes;
+pub use routes::base::handler;
+pub use routes::scrape::wiki;
+pub use routes::data::read_json;
 
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    // TODO: perhaps the main function should take command line arguments
+    // QUESTION: perhaps the lib folder should be the one instantiating / running the router?
     tracing_subscriber::fmt::init();
 
     // build our application with a route
@@ -28,26 +32,3 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     Ok(())
 }
 
-async fn handler() -> Html<&'static str> {
-    Html("<h1>Hello, World!</h1>")
-}
-
-async fn wiki(Path(ll): Path<String>) -> String {
-    fetch_wiki(&ll).await.unwrap_or_else(|e| {
-        tracing::error!("error fetching wiki: {:?}", e);
-        format!("error fetching wiki: {:?}", e)
-    })
-}
-
-#[derive(Serialize)]
-struct Payload {
-    name: String,
-}
-
-async fn read_json() -> axum::response::Response {
-    // get JSON from body of request
-    // print JSON to stdout
-    // just return the same JSON with status 200
-    let payload = Payload { name: String::from("hello!") };
-    Json(payload).into_response()
-}
